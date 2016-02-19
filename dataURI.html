@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data uri</title>
+    <link rel="stylesheet" href="base.css">
+    <style>
+
+        img{
+            max-width: 100%;
+        }
+
+        #images{
+            width: 50%;
+        }
+
+    </style>
+</head>
+<body>
+Data URI will consist of MIME Type; Character encoding; Encoding; and provide data
+
+things you need:
+<ul>
+    <li>Install openSSL *comes default by mac*</li>
+    <li>OPenSSL base64 and do on machine</li>
+    <li><code>base64 -in "file name" -o ship.txt</code></li>
+    <li>FileReader API on JavaScript</li>
+</ul>
+
+<button>Select File</button>
+<input type="file" style="display: none;">
+
+<div id="images"></div>
+
+<script>
+
+    /* FileReader */
+
+    //let user select the image
+    //and print the data uri
+
+
+    /* One method to use without input type="file" */
+    document.querySelector("button").addEventListener("click", function(){
+        document.querySelector("input[type=file]").click();
+    });
+
+    /* Another method using input type="file" */
+    document.querySelector("input[type=file]").addEventListener("change", function(){
+        console.log(this.files);
+        var filereader = new FileReader();
+        filereader.addEventListener("loadend", function(){
+            console.log(this.result);
+            var div = document.querySelector("div#images");
+            div.innerHTML= "";
+            var img = document.createElement("img");
+            img.src = this.result;
+            div.appendChild(img);
+        });
+        filereader.readAsDataURL(this.files[0]);
+    });
+
+</script>
+</body>
+</html>
